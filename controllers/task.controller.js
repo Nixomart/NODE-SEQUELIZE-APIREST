@@ -12,10 +12,11 @@ export const getTasks = async(req, res) =>{
 export const createTask =async (req, res) =>{
     try {
         
-        const {name, done} = req.body
+        const {name, done, projectId} = req.body
         const newTask = await Task.create({
             name,
-            done
+            done,
+            projectId
         })
         res.json({message: 'task created!'})
     } catch (error) {
@@ -61,7 +62,7 @@ try {
 
     taskFound.save()
 
-    res.status(200).json({message: 'task updated!'})
+    res.status(201).json({message: 'task updated!'})
 } catch (error) {
     return res.json({message: error.message})
 }

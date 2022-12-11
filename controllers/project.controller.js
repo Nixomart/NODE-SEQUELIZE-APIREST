@@ -1,4 +1,5 @@
 import { Project } from "../models/Project.js";
+import { Task } from "../models/Task.js";
 
 export const createProject = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ export const createProject = async (req, res) => {
 
     res.send({ message: "creating project" });
   } catch (error) {
-    res.json({ message: `error ${error}` });
+    return res.json({ message: error.message });
   }
 };
 export const getProjects = async (req, res) => {
@@ -21,7 +22,7 @@ export const getProjects = async (req, res) => {
 
     res.json(projects);
   } catch (error) {
-    res.json({ message: `error ${error}` });
+    return res.json({ message: error.message });
   }
 };
 
@@ -39,7 +40,7 @@ export const updateProject = async (req, res) => {
     await projectUpdated.save();
     res.json({ message: "project updated" });
   } catch (error) {
-    return res.json({ message: "error" });
+    return res.json({ message: error.message });
   }
 };
 export const deleteProject = async (req, res) => {
@@ -52,7 +53,7 @@ export const deleteProject = async (req, res) => {
     });
     res.status(204).json({ message: "elemento borrado!" });
   } catch (error) {
-    return res.json({ message: "error" });
+    return res.json({ message: error.message });
   }
 };
 export const getProject = async (req, res) => {
@@ -64,5 +65,21 @@ export const getProject = async (req, res) => {
       },
     });
     res.json(projectFound);
-  } catch (error) {}
+  } catch (error) {
+    return res.json({ message: error.message });
+  }
+};
+
+export const getProjectTasks = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const projectTasks = await Task.findAll({
+      where: {
+        projectId: id,
+      },
+    });
+    res.status(200).json(projectTasks);
+  } catch (error) {
+    return res.json({ message: error.message });
+  }
 };
