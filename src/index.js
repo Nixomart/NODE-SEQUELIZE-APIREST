@@ -5,7 +5,8 @@ import '../models/Task.js'
 
 async function main() {
   try {
-    await sequelize.sync({ force: true});
+    //{force: true} -> this is used for to restart the tables 
+    await sequelize.sync({ force: false});
     app.listen(4000);
     console.log("server in 4000");
   } catch (error) {
