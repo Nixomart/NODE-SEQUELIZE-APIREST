@@ -10,8 +10,6 @@ export const createProject = async (req, res) => {
       priority,
     });
 
-    console.log("newProject", newProject);
-
     res.send({ message: "creating project" });
   } catch (error) {
     res.json({ message: `error ${error}` });
@@ -20,7 +18,6 @@ export const createProject = async (req, res) => {
 export const getProjects = async (req, res) => {
   try {
     const projects = await Project.findAll();
-    console.log("projects", projects);
 
     res.json(projects);
   } catch (error) {
